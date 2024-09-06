@@ -1,16 +1,17 @@
 #include<stdio.h>
 #include<stdlib.h>
+#define PRINTF printf("\n");
 int quick(int *a,int low,int high)
 {
 	int pivot=a[low];
 	int temp,i=low,j=high;
 	while(i<j)
 	{
-		while(a[i]<=pivot && i<=high-1)
+		while(a[i]<=pivot && i<=high)
 		{
 			i++;
 		}
-		while(a[j]>a[pivot] && j>=low+1)
+		while(a[j]>pivot && j>=low)
 		{
 			j--;
 		}
@@ -21,9 +22,10 @@ int quick(int *a,int low,int high)
 			a[j]=temp;
 		}
 	}
-	temp=a[low];
+
+	/** swap bet pivot and j index **/
 	a[low]=a[j];
-	a[j]=temp;
+	a[j]=pivot;
 	return j;
 }
 		
@@ -39,10 +41,14 @@ void quick_sort(int *a,int low,int high)
 
 int main()
 {
-	int n,*arr;
+	int n,*arr=NULL;
 	printf("enter the size:\n");
 	scanf("%d",&n);
 	arr=calloc(n,sizeof(int));
+	if(arr==NULL){
+		perror("Memory allaocation error\n");
+		exit(0);
+	}
 	printf("enter the array elements:\n");
 	for(int i=0;i<n;i++)
 	{
@@ -53,10 +59,12 @@ int main()
 	{
 		printf("%d ",arr[i]);
 	}
-	printf("\n");
+	PRINTF;
 	quick_sort(arr,0,n-1);
+	printf("array elements after sorting\n");
 	for(int i=0;i<n;i++)
 	{
 		printf("%d ",arr[i]);
 	}
+	PRINTF;
 }
